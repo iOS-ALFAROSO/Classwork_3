@@ -31,12 +31,15 @@ class ViewController: UIViewController {
     }
 
     @IBAction func didPressPlus(_ sender: Any) {
+        changeMode(newMode: .addition)
     }
     
     @IBAction func didPressSubstract(_ sender: Any) {
+        changeMode(newMode: .substraction)
     }
     
     @IBAction func didPressMultiply(_ sender: Any) {
+        changeMode(newMode: .multiplication)
     }
     
     @IBAction func didPressEquals(_ sender: Any) {
