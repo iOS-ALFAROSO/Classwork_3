@@ -43,6 +43,24 @@ class ViewController: UIViewController {
     }
     
     @IBAction func didPressEquals(_ sender: Any) {
+        guard let labelInt: Int = Int(labelString) else{
+            return
+        }
+        if(currentMode == .not_set || lastButtonWasMode){
+            return
+        }
+        if(currentMode == .addition){
+            savedNum += labelInt
+        } else if(currentMode == .substraction) {
+            savedNum -= labelInt
+        } else if(currentMode == .multiplication){
+            savedNum *= labelInt
+        }
+        
+        currentMode = .not_set
+        labelString = "\(savedNum)"
+        updateText()
+        lastButtonWasMode = true
     }
     
     @IBAction func didPressClear(_ sender: Any) {
@@ -56,11 +74,11 @@ class ViewController: UIViewController {
     @IBAction func didPressNumber(_ sender: UIButton) {
         let stringValue: String? = sender.titleLabel?.text
         
-//        if(lastButtonWasMode){
-//            lastButtonWasMode = false
-//            labelString = "0"
-//        }
-//        
+        if(lastButtonWasMode){
+            lastButtonWasMode = false
+            labelString = "0"
+        }
+        
         labelString = labelString.appending(stringValue!)
         updateText()
     }
@@ -73,23 +91,23 @@ class ViewController: UIViewController {
         guard let labelInt: Int = Int(labelString) else {
             return
         }
-//        if(currentMode == .not_set){
-//            savedNum = labelInt
-//        }
-//        let formatter: NumberFormatter = NumberFormatter()
-//        formatter.numberStyle = .decimal
-//        let num: NSNumber = NSNumber(value: labelInt)
-//        
-//        label.text = formatter.string(from: num)
-        label.text = "\(labelInt)"
+        if(currentMode == .not_set){
+            savedNum = labelInt
+        }
+        let formatter: NumberFormatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        let num: NSNumber = NSNumber(value: labelInt)
+        
+        label.text = formatter.string(from: num)
+//        label.text = "\(labelInt)"
     }
     
     func changeMode (newMode: modes){
-//        if(savedNum == 0){
-//            return
-//        }
-//        currentMode = newMode
-//        lastButtonWasMode = true
+        if(savedNum == 0){
+            return
+        }
+        currentMode = newMode
+        lastButtonWasMode = true
     }
 
 }
